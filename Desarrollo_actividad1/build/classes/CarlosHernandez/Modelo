@@ -1,0 +1,75 @@
+@startuml
+' Configuración general
+skinparam classAttributeIconSize 0
+
+' Clases principales
+
+class Productor {
+  - id : int
+  - nombre : String
+  - direccion : String
+  - tipoActividad : String
+}
+
+class Residuo {
+  - id : int
+  - codigo : String
+  - cantidad : double
+  - fechaGeneracion : Date
+}
+
+class ConstituyenteQuimico {
+  - id : int
+  - nombre : String
+  - proporcion : double
+}
+
+class Traslado {
+  - id : int
+  - cantidad : double
+  - fechaSalida : Date
+  - fechaLlegada : Date
+  - distanciaKm : double
+  - costo : double
+}
+
+class EmpresaTransportista {
+  - id : int
+  - nombre : String
+  - tipoServicio : String
+}
+
+class MedioTransporte {
+  - id : int
+  - tipo : String
+}
+
+class Envase {
+  - id : int
+  - tipo : String
+  - estado : String
+}
+
+class Destino {
+  - id : int
+  - nombre : String
+  - ubicacion : String
+}
+
+class Tratamiento {
+  - id : int
+  - tipo : String
+  - fecha : Date
+}
+
+' Relaciones
+Productor "1" -- "0..*" Residuo : produce >
+Residuo "1" -- "1..*" ConstituyenteQuimico : compuesto por >
+Residuo "1" -- "0..*" Traslado : puede ser trasladado >
+Traslado "1" -- "1" Residuo : transporta >
+Traslado "1" -- "1..*" EmpresaTransportista : realizado por >
+Traslado "1" -- "1..*" MedioTransporte : usa >
+Traslado "1" -- "1" Envase : envasado en >
+Traslado "1" -- "1" Destino : tiene destino >
+Destino "1" -- "0..*" Tratamiento : recibe >
+@enduml
